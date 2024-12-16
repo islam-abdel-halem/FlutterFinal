@@ -3,7 +3,16 @@ import 'package:finalproject/models/diet_model.dart';
 import 'package:finalproject/models/popular_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:filter_list/filter_list.dart';
+import 'package:finalproject/controllers/SelectedListController.dart';
+import 'package:get/get.dart';
 
+List<String> DefaultList = [
+  'Flutter',
+  'Dart',
+  'Java',
+  'Kotlin',
+];
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -18,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   List<CategoryModel> categories = [];
   List<DietModel> diets = [];
   List<PopularDietsModel> popularDiets = [];
+  var controller = Get.put(Selectedlistcontroller());
 
   @override
   void initState() {
@@ -28,6 +38,23 @@ class _HomePageState extends State<HomePage> {
     categories = CategoryModel.getCategories();
     diets = DietModel.getDiets();
     popularDiets = PopularDietsModel.getPopularDiets();
+  }
+
+  void openFilterDialog(context) async {
+    await FilterListDialog.display<String>(
+      context,
+      listData: DefaultList,
+      selectedListData: controller.selectedList,
+      choiceChipLabel: (item) => item,
+      validateSelectedItem: (list, val) => list!.contains(val),
+      onItemSearch: (item, query) {
+        return item.toLowerCase().contains(query.toLowerCase());
+      },
+      onApplyButtonClick: (list) {
+        controller.selectedList.value = List<String>.from(list!);
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   @override
@@ -342,10 +369,12 @@ class _HomePageState extends State<HomePage> {
                         endIndent: 10,
                         thickness: 0.1,
                       ),
-                      Padding(
+                      GestureDetector(
+                      onTap: () => openFilterDialog(context),
+                      child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SvgPicture.asset('assets/icons/Filter.svg'),
-                      ),
+                      )),
                     ],
                   ),
                 ),
