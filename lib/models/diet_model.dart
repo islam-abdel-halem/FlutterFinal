@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class DietModel {
   String name;
+  List<String> ingredients;
   String iconPath;
   String level;
   String duration;
@@ -11,6 +12,7 @@ class DietModel {
 
   DietModel(
       {required this.name,
+      required this.ingredients,
       required this.iconPath,
       required this.level,
       required this.duration,
@@ -23,6 +25,7 @@ class DietModel {
 
     diets.add(DietModel(
         name: 'Honey Pancake',
+        ingredients: ['Flour', 'Eggs', 'Milk'],
         iconPath: 'assets/icons/honey-pancakes.svg',
         level: 'Easy',
         duration: '30mins',
@@ -32,12 +35,23 @@ class DietModel {
 
     diets.add(DietModel(
         name: 'Canai Bread',
+        ingredients: ['bola', 'Cheese', 'Milk'],
         iconPath: 'assets/icons/canai-bread.svg',
         level: 'Easy',
         duration: '20mins',
         calorie: '230kCal',
         viewIsSelected: false,
         boxColor: const Color(0xffEEA4CE)));
+     diets.add(DietModel(
+        name: 'Bola Bread',
+        ingredients: ['Eggs', 'bola', 'mola'],
+        iconPath: 'assets/icons/canai-bread.svg',
+        level: 'Easy',
+        duration: '20mins',
+        calorie: '230kCal',
+        viewIsSelected: false,
+        boxColor: const Color(0xffEEA4CE)));
+
 
     return diets;
   }
