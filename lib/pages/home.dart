@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             setState(() {
                             DietModel.updateSelectedDiet(diets, index);
-
+                            // TODO: open new recipe page here 
                             });
                           },
                           child:
@@ -206,6 +206,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: Center(
                             child: Text(
+                              
                               'View',
                               style: TextStyle(
                                 color: !diets[index].viewIsSelected ? Colors.white : const Color(0xffC58BF2),
@@ -260,6 +261,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 separatorBuilder: (context, index) => const SizedBox(width: 25,),
                 itemBuilder: (context, index) {
+                  // use GestureDetector to make each category clickable 
+                  // TODO: Add onTap to each category to open cateogry page with respictive recipes
                   return Container(
                     width: 100,
                     decoration: BoxDecoration(
@@ -301,6 +304,8 @@ class _HomePageState extends State<HomePage> {
 
   Container _searchField() {
     return Container(
+        // TODO: Add search functionality to search for recipes by name
+
           margin: const EdgeInsets.only(top: 40,left: 20,right: 20),
           decoration: BoxDecoration(
             boxShadow: [
