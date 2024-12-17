@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-
 import 'pages/home.dart';
-
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+  
 void main() {
+
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
+
   runApp(const MyApp());
 }
 
-
+tionality
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

@@ -35,7 +35,7 @@ class DietModel {
 
     diets.add(DietModel(
         name: 'Canai Bread',
-        ingredients: ['bola', 'Cheese', 'Milk'],
+        ingredients: ['Bola', 'Cheese', 'Milk'],
         iconPath: 'assets/icons/canai-bread.svg',
         level: 'Easy',
         duration: '20mins',
@@ -44,7 +44,7 @@ class DietModel {
         boxColor: const Color(0xffEEA4CE)));
      diets.add(DietModel(
         name: 'Bola Bread',
-        ingredients: ['Eggs', 'bola', 'mola'],
+        ingredients: ['Eggs', 'Bola', 'Mola'],
         iconPath: 'assets/icons/canai-bread.svg',
         level: 'Easy',
         duration: '20mins',
@@ -56,7 +56,33 @@ class DietModel {
     return diets;
   }
 
-  static void updateSelectedDiet(List<DietModel> diets, int selectedIndex) {
+  static DietModel fromMap(Map<String, dynamic> map) {
+    return DietModel(
+      name: map['name'],
+      ingredients: map['ingredients'].split(','),
+      iconPath: map['iconPath'],
+      level: map['level'],
+      duration: map['duration'],
+      calorie: map['calorie'],
+      boxColor: Color(map['boxColor']),
+      viewIsSelected: map['viewIsSelected'] == 1,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'ingredients': ingredients.join(','),
+      'iconPath': iconPath,
+      'level': level,
+      'duration': duration,
+      'calorie': calorie,
+      'boxColor': boxColor.value,
+      'viewIsSelected': viewIsSelected ? 1 : 0,
+    };
+  }
+
+  static void updateSelectedDiet(var diets, int selectedIndex) {
     for (int i = 0; i < diets.length; i++) {
       diets[i].viewIsSelected = (i == selectedIndex);
     }

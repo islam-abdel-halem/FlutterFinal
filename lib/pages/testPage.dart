@@ -2,31 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:finalproject/controllers/SearchController.dart'; // Import the controller
 import 'package:filter_list/filter_list.dart';
-import 'package:finalproject/controllers/SelectedListController.dart';
 
-List<String> DefaultList = ['Eggs', 'bola', 'mola', 'Flour', 'Cheese', 'Milk'];
+List<String> DefaultList = ['Pasta', 'Tomato', 'Cheese','Pizza base'];
 
 class TestPage extends StatelessWidget {
-  final SearchBarController searchBarcontroller =
-      Get.put(SearchBarController());
-  final controller = Get.put(Selectedlistcontroller());
+  final SearchBarController searchBarcontroller = Get.put(SearchBarController());
+  final FocusNode searchFocusNode = FocusNode();
 
   void openFilterDialog(context) async {
     await FilterListDialog.display<String>(
       context,
       listData: DefaultList,
-      selectedListData: controller.selectedList,
+      selectedListData: searchBarcontroller.selectedIngredients.toList(),
       choiceChipLabel: (item) => item,
       validateSelectedItem: (list, val) => list!.contains(val),
       onItemSearch: (item, query) {
         return item!.toLowerCase().contains(query.toLowerCase());
       },
       onApplyButtonClick: (list) {
-        searchBarcontroller.selectedIngredients.value =
-            List<String>.from(list!);
-        searchBarcontroller
-            .updateSelectedIngredients(searchBarcontroller.selectedIngredients);
+        searchBarcontroller.updateSelectedIngredients(List<String>.from(list!));
         Navigator.of(context).pop();
+        
       },
     );
   }
@@ -37,6 +33,9 @@ class TestPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: TextField(
+            focusNode: searchFocusNode,
+            onTapOutside: (event) => searchFocusNode.unfocus(),
+
             onChanged: (value) {
               searchBarcontroller.updateSearchQuery(value);
             },
@@ -45,19 +44,40 @@ class TestPage extends StatelessWidget {
             ),
           ),
         ),
-        body: Center(
-          child: Obx(
-            () => searchBarcontroller.filteredRecipe.isEmpty
-                ? Text('No item found')
-                : Wrap(
-                    children: searchBarcontroller.filteredRecipe
-                        .map((e) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Chip(label: Text(e.name))))
-                        .toList(),
+       body: Obx(() {
+          if (searchFocusNode.hasFocus) {
+            // show widget from down to up when search bar is focused
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: searchBarcontroller.itemList.length,
+                    itemBuilder: (context, index) {
+                      final recipe = searchBarcontroller.itemList[index];
+                      return ListTile(
+                        title: Text(recipe.name),
+                        subtitle: Text('Ingredients: ${recipe.ingredients.join(', ')}'),
+                      );
+                    },
                   ),
-          ),
-        ),
+                ),
+              ],
+            );
+          } else if (searchBarcontroller.filteredRecipe.isEmpty) {
+            return Center(child: Text('No recipes found'));
+          } else {
+            return ListView.builder(
+              itemCount: searchBarcontroller.filteredRecipe.length,
+              itemBuilder: (context, index) {
+                final recipe = searchBarcontroller.filteredRecipe[index];
+                return ListTile(
+                  title: Text(recipe.name),
+                  subtitle: Text('Ingredients: ${recipe.ingredients.join(', ')}'),
+                );
+              },
+            );
+          }
+        }),
         floatingActionButton: FloatingActionButton(
           onPressed: () => openFilterDialog(context),
           child: const Icon(Icons.filter_list),
