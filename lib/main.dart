@@ -10,7 +10,7 @@ void main() {
   runApp(const MyApp());
 }
 
-tionality
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
