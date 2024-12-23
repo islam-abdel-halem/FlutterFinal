@@ -38,7 +38,9 @@ dependencies:
   flutter_svg: ^1.1.6
   get: any 
   filter_list: any
-  
+  sqflite: any
+  path: any
+  sqflite_common_ffi: any
 
 
 dev_dependencies:

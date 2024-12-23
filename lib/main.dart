@@ -1,10 +1,14 @@
 import 'package:finalproject/pages/login.dart';
 import 'package:finalproject/pages/signup.dart';
 import 'package:flutter/material.dart';
-
 import 'pages/home.dart';
-
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+  
 void main() {
+
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
+
   runApp(const MyApp());
 }
 
@@ -22,4 +26,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 
