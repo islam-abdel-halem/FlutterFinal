@@ -1,7 +1,7 @@
 import 'package:finalproject/models/category_model.dart';
 import 'package:finalproject/models/diet_model.dart';
 import 'package:finalproject/models/popular_model.dart';
-import 'package:finalproject/pages/recipe_page.dart';
+import 'package:finalproject/pages/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
