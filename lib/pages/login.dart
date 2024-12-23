@@ -2,6 +2,9 @@ import 'package:finalproject/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'forgot_password.dart';
+import 'home.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -81,7 +84,11 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   TextButton(
                     onPressed: () {
-                      // Forgot password logic
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForgotPasswordScreen()),
+                      );
                     },
                     child: const Text(
                       'Forgot password?',
@@ -92,7 +99,11 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   ElevatedButton(
                     onPressed: () {
-                      // Login button logic
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,

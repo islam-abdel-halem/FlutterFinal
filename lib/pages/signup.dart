@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'home.dart';
 import 'login.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -79,7 +80,11 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   ElevatedButton(
                     onPressed: () {
-                      // Signup button logic
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
